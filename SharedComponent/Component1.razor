@@ -1,0 +1,13 @@
+﻿@inject Microsoft.JSInterop.IJSRuntime _jSRuntime;
+<div class="my-component">
+    This Blazor component is defined in the <strong onclick="@(_ => { Prompt("Hi from SharedBlazorLibraryTest"); })">SharedBlazorLibraryTest</strong> package.
+</div>
+@functions {
+        public Task Prompt(string message)
+        {
+            // Implemented in exampleJsInterop.js
+            return _jSRuntime.InvokeAsync<string>(
+                "exampleJsFunctions.showPrompt",
+                message);
+        }
+}
