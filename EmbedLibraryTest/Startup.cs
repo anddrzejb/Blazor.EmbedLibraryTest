@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using EmbedLibraryTest.Data;
+using System.Reflection;
 
 namespace EmbedLibraryTest
 {
@@ -39,6 +40,15 @@ namespace EmbedLibraryTest
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new BlazorEmbedLibrary.BlazorFileProvider(
+                    new List<Assembly>()
+                    {
+                        typeof(SharedComponent.Component1).Assembly
+                    }
+                )
+            });
 
             app.UseRouting();
 
